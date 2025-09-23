@@ -1,9 +1,5 @@
 # Touchpoints
 
-Detailed specs for the two AI features we’ll prototype first.
-
----
-
 ## 1. Support Assistant
 
 ### Problem
@@ -73,7 +69,8 @@ _**in more details:**_
 ### Feasibility
 FAQ doc + order-status API already exist. Next step: prototype with Llama 3.1 8B and test against top 20 support queries.
 
----
+
+
 
 ## 2. Smart Search Suggestions
 
@@ -117,3 +114,4 @@ Product team reviews weekly if CTR drops <10%.
 
 ### Feasibility
  Product API exists. Use Llama 3.1 8B Instruct via OpenRouter + local embeddings (sentence-transformers). Prototype: static suggestions first.
+
