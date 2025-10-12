@@ -1,0 +1,182 @@
+[
+  {
+    "id": "P0001",
+    "title": "Blue T-Shirt",
+    "price": 19.99,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1",
+    "tags": ["clothing", "tshirt"],
+    "stockQty": 10,
+    "description": "A soft, breathable cotton T-shirt designed for everyday comfort. Perfect for layering or wearing solo."
+  },
+  {
+    "id": "P0002",
+    "title": "Red Hoodie",
+    "price": 39.99,
+    "image": "https://images.unsplash.com/photo-1520975657931-4e6f0c3c6e1f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=2",
+    "tags": ["clothing", "hoodie"],
+    "stockQty": 5,
+    "description": "Stay cozy in this premium fleece hoodie featuring a relaxed fit, adjustable drawstring hood, and kangaroo pocket."
+  },
+  {
+    "id": "P0003",
+    "title": "Sneakers",
+    "price": 59.99,
+    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=3",
+    "tags": ["shoes", "sneakers"],
+    "stockQty": 3,
+    "description": "Lightweight sneakers with cushioned soles and breathable mesh — ideal for daily wear or workouts."
+  },
+  {
+    "id": "P0004",
+    "title": "Black Jeans",
+    "price": 49.99,
+    "image": "https://images.unsplash.com/photo-1555529669-6e93a5b3b6d0?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=4",
+    "tags": ["clothing", "jeans"],
+    "stockQty": 8,
+    "description": "Classic slim-fit black jeans made with durable stretch denim for all-day comfort and effortless style."
+  },
+  {
+    "id": "P0005",
+    "title": "White Socks (3 pack)",
+    "price": 9.99,
+    "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=5",
+    "tags": ["clothing", "socks"],
+    "stockQty": 50,
+    "description": "A pack of three premium white socks crafted from soft, moisture-wicking cotton with reinforced heels and toes."
+  },
+  {
+    "id": "P0006",
+    "title": "Leather Belt",
+    "price": 24.99,
+    "image": "https://images.unsplash.com/photo-1528137872275-8a6b8b1d8bfb?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=6",
+    "tags": ["accessories", "belt"],
+    "stockQty": 12,
+    "description": "Handcrafted genuine leather belt with a sleek metal buckle — perfect for both casual and formal looks."
+  },
+  {
+    "id": "P0007",
+    "title": "Baseball Cap",
+    "price": 14.99,
+    "image": "https://images.unsplash.com/photo-1531177076122-2019e1b8a9b8?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7",
+    "tags": ["accessories", "hat"],
+    "stockQty": 20,
+    "description": "A classic six-panel cap made from breathable cotton twill with an adjustable strap for a perfect fit."
+  },
+  {
+    "id": "P0008",
+    "title": "Coffee Mug",
+    "price": 12.99,
+    "image": "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=8",
+    "tags": ["home", "kitchen"],
+    "stockQty": 30,
+    "description": "Enjoy your favorite brew in this ceramic mug featuring a smooth matte finish and comfortable handle."
+  },
+  {
+    "id": "P0009",
+    "title": "Wireless Mouse",
+    "price": 29.99,
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=9",
+    "tags": ["electronics", "accessories"],
+    "stockQty": 15,
+    "description": "Ergonomic wireless mouse with silent click buttons and long battery life for seamless productivity."
+  },
+  {
+    "id": "P0010",
+    "title": "Bluetooth Speaker",
+    "price": 79.99,
+    "image": "https://images.unsplash.com/photo-1518444020605-2b3a7f1f6e20?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=10",
+    "tags": ["electronics", "audio"],
+    "stockQty": 7,
+    "description": "Powerful portable Bluetooth speaker with deep bass, clear highs, and up to 10 hours of playtime."
+  },
+  {
+    "id": "P0011",
+    "title": "Notebook - Ruled",
+    "price": 6.99,
+    "image": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=11",
+    "tags": ["office", "stationery"],
+    "stockQty": 100,
+    "description": "Elegant ruled notebook with smooth, thick paper and a durable soft cover for your notes and ideas."
+  },
+  {
+    "id": "P0012",
+    "title": "Desk Lamp",
+    "price": 34.99,
+    "image": "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=12",
+    "tags": ["home", "lighting"],
+    "stockQty": 10,
+    "description": "Modern adjustable desk lamp with warm LED lighting and a sleek minimalist design for any workspace."
+  },
+  {
+    "id": "P0013",
+    "title": "Water Bottle",
+    "price": 15.99,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=13",
+    "tags": ["outdoor", "fitness"],
+    "stockQty": 25,
+    "description": "Durable stainless steel water bottle that keeps drinks cold for 24 hours or hot for 12 hours."
+  },
+  {
+    "id": "P0014",
+    "title": "Yoga Mat",
+    "price": 39.99,
+    "image": "https://images.unsplash.com/photo-1540202404-3b6b6c6b9e1d?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=14",
+    "tags": ["fitness"],
+    "stockQty": 12,
+    "description": "Eco-friendly yoga mat with non-slip texture and extra cushioning for maximum comfort and stability."
+  },
+  {
+    "id": "P0015",
+    "title": "Sunglasses",
+    "price": 49.99,
+    "image": "https://images.unsplash.com/photo-1503342452485-86f7c22f52b5?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=15",
+    "tags": ["accessories"],
+    "stockQty": 18,
+    "description": "Stylish UV-protective sunglasses with lightweight frames and scratch-resistant lenses."
+  },
+  {
+    "id": "P0016",
+    "title": "Backpack",
+    "price": 59.99,
+    "image": "https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=16",
+    "tags": ["bags", "outdoor"],
+    "stockQty": 14,
+    "description": "Versatile everyday backpack with multiple compartments, padded straps, and water-resistant fabric."
+  },
+  {
+    "id": "P0017",
+    "title": "Wireless Earbuds",
+    "price": 99.99,
+    "image": "https://images.unsplash.com/photo-1517495306984-937f0f6f5b1a?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=17",
+    "tags": ["electronics", "audio"],
+    "stockQty": 6,
+    "description": "Compact wireless earbuds with noise cancellation, crystal-clear sound, and all-day battery life."
+  },
+  {
+    "id": "P0018",
+    "title": "Hooded Sweatshirt",
+    "price": 44.99,
+    "image": "https://images.unsplash.com/photo-1520975691864-3b8a7b4c3b3f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=18",
+    "tags": ["clothing", "hoodie"],
+    "stockQty": 9,
+    "description": "Soft cotton-blend hoodie with ribbed cuffs and a relaxed fit for the perfect casual layer."
+  },
+  {
+    "id": "P0019",
+    "title": "Running Shorts",
+    "price": 22.99,
+    "image": "https://images.unsplash.com/photo-1520975661636-6b2d9e8b2e8f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=19",
+    "tags": ["clothing", "fitness"],
+    "stockQty": 20,
+    "description": "Lightweight, quick-drying running shorts with built-in mesh lining and reflective details."
+  },
+  {
+    "id": "P0020",
+    "title": "Beanie",
+    "price": 12.99,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=20",
+    "tags": ["accessories", "hat"],
+    "stockQty": 30,
+    "description": "Warm knitted beanie made from soft acrylic yarn — perfect for chilly days or casual outfits."
+  }
+]

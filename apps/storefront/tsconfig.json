@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["DOM", "ES2020"],
+    "jsx": "react-jsx",
+
+    // Vite-friendly resolution
+    "moduleResolution": "Bundler",
+
+    // Interop & JSON imports
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+
+    // Project hygiene
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+
+    // Paths / aliases
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    // Type contexts for Vite + Vitest
+    "types": ["vitest/globals", "vite/client"]
+  },
+  "include": [
+    "src",
+    "vitest.config.ts",
+    "vite.config.ts",
+    "./src/test-setup.ts"
+  ]
+}

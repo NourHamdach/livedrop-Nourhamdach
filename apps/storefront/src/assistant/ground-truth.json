@@ -1,0 +1,22 @@
+[
+  { "qid": "Q01", "category": "Returns", "question": "What's your return policy?", "answer": "You can return items within 30 days with a receipt." },
+  { "qid": "Q02", "category": "Shipping", "question": "How long does shipping take?", "answer": "Standard shipping takes 3-5 business days." },
+  { "qid": "Q03", "category": "Orders", "question": "How do I track my order?", "answer": "Use your order id on the Order Status page." },
+  { "qid": "Q04", "category": "Payments", "question": "What payment methods do you accept?", "answer": "We accept major credit cards and PayPal." },
+  { "qid": "Q05", "category": "Taxes", "question": "Do you charge sales tax?", "answer": "Sales tax is calculated at checkout based on your shipping address." },
+  { "qid": "Q06", "category": "Shipping", "question": "Do you ship internationally?", "answer": "Yes, we ship to many countries. Rates vary by destination." },
+  { "qid": "Q07", "category": "Returns", "question": "Can I return sale items?", "answer": "Sale items can be returned unless marked final sale." },
+  { "qid": "Q08", "category": "Orders", "question": "Can I change my order after placing it?", "answer": "We can sometimes modify orders within 1 hour of placement—contact support." },
+  { "qid": "Q09", "category": "Account", "question": "How do I reset my password?", "answer": "Use the forgot-password link on the sign-in page to reset your password." },
+  { "qid": "Q10", "category": "Products", "question": "Are your products authentic?", "answer": "Yes, all products sold are authentic and come with manufacturer warranties where applicable." },
+  { "qid": "Q11", "category": "Shipping", "question": "Can I expedite my order?", "answer": "Yes, expedited shipping is available at checkout for certain regions." },
+  { "qid": "Q12", "category": "Returns", "question": "How long does a refund take?", "answer": "Refunds typically appear within 5-7 business days after we process the return." },
+  { "qid": "Q13", "category": "Products", "question": "Do you have size guides?", "answer": "Yes, size guides are available on each product page." },
+  { "qid": "Q14", "category": "Orders", "question": "What if my order arrives damaged?", "answer": "Contact support with photos and we'll help arrange a replacement or refund." },
+  { "qid": "Q15", "category": "Shipping", "question": "Who do you use for shipping?", "answer": "We partner with major carriers; carrier is shown on the Order Status page when shipped." },
+  { "qid": "Q16", "category": "Returns", "question": "Do returns cost anything?", "answer": "Return shipping may apply depending on the reason; see full policy for details." },
+  { "qid": "Q17", "category": "Orders", "question": "Can I cancel my order?", "answer": "Orders can be canceled within 1 hour of placement if not yet processed." },
+  { "qid": "Q18", "category": "Account", "question": "How do I update my address?", "answer": "Update your shipping address on the Account page before placing an order." },
+  { "qid": "Q19", "category": "Products", "question": "Are items restocked?", "answer": "Some items are restocked; sign up for back-in-stock notifications on product pages." },
+  { "qid": "Q20", "category": "Support", "question": "How do I contact support?", "answer": "Use the Ask Support panel in the site or email support@example.com." }
+]
