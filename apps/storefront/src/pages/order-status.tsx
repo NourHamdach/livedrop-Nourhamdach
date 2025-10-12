@@ -13,7 +13,6 @@ export default function OrderStatus() {
   const navigate = useNavigate()
   const [status, setStatus] = useState<OrderStatusData | null>(null)
 
-  // Ensure isOrderStatusData is defined in the correct scope
   function isOrderStatusData(obj: any): obj is OrderStatusData {
     const validStatuses: OrderStatusData['status'][] = ['Placed', 'Packed', 'Shipped', 'Delivered']
     return (
@@ -25,41 +24,35 @@ export default function OrderStatus() {
     )
   }
 
+  // 🧠 Load fallback from localStorage in case API fails or user is offline
   useEffect(() => {
-    let mounted = true
-
-    async function poll() {
-      const s = await getOrderStatus(id || '')
-      // Fixed the type mismatch for setStatus
-      if (mounted && isOrderStatusData(s)) {
-        setStatus(s)
-      }
-      setTimeout(poll, 1500)
+    const savedOrders = JSON.parse(localStorage.getItem('orders') || '[]')
+    const found = savedOrders.find((o: any) => o.id === id)
+    if (found && !status) {
+      setStatus({ status: 'Placed' }) // default initial state for stored orders
     }
+  }, [id, status])
 
-    poll()
-    return () => {
-      mounted = false
-    }
-  }, [id])
-
-  // Replaced setTimeout with setInterval for polling
+  // 🔄 Poll API for live updates
   useEffect(() => {
     let mounted = true
     const interval = setInterval(async () => {
-      const s = await getOrderStatus(id || '')
-      if (mounted && isOrderStatusData(s)) {
-        setStatus(s)
+      try {
+        const s = await getOrderStatus(id || '')
+        if (mounted && isOrderStatusData(s)) {
+          setStatus(s)
+        }
+      } catch (err) {
+        console.warn('Failed to fetch status, using local data.')
       }
-    }, 1500)
-
+    }, 2000)
     return () => {
       mounted = false
       clearInterval(interval)
     }
   }, [id])
 
-  // Added error feedback for invalid order IDs
+  // 🚨 If order not found anywhere
   if (!status)
     return (
       <main className="max-w-xl mx-auto px-4 py-10 text-center">
@@ -67,7 +60,6 @@ export default function OrderStatus() {
         <button
           onClick={() => navigate('/')}
           className="mt-4 px-4 py-2 rounded bg-primary-600 hover:bg-primary-700 text-white transition"
-          aria-label="Return to the home page"
         >
           Back to Home
         </button>
@@ -83,7 +75,7 @@ export default function OrderStatus() {
         Order #{id?.slice(-4)}
       </h1>
 
-      {/* Status timeline */}
+      {/* Progress timeline */}
       <div className="relative mb-8">
         <div className="absolute top-4 left-6 right-6 h-1 bg-gray-200 rounded-full" />
         <div
@@ -142,7 +134,6 @@ export default function OrderStatus() {
         <button
           onClick={() => navigate('/')}
           className="text-sm text-primary-700 hover:underline"
-          aria-label="Return to the catalog page"
         >
           ← Back to Catalog
         </button>

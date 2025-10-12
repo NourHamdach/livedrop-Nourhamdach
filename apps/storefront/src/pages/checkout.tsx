@@ -15,25 +15,58 @@ export default function Checkout() {
 
   // If cart is empty and not processing order, redirect to cart
   React.useEffect(() => {
-    if (items.length === 0 && !isProcessing) {
-      navigate('/cart')
+  if (isProcessing) return // don't redirect mid-checkout
+
+  if (items.length === 0) {
+    try {
+      // 🧠 Check if there are past orders in localStorage
+      const savedOrders = JSON.parse(localStorage.getItem('orders') || '[]')
+
+      if (savedOrders.length > 0) {
+        // 🕓 Get the most recent order
+        const lastOrder = savedOrders[savedOrders.length - 1]
+        navigate(`/order/${lastOrder.id}`)
+        return
+      }
+    } catch {
+      // ignore JSON errors
     }
-  }, [items.length, isProcessing, navigate])
+
+    // 🛒 No cart items & no past orders → go back to cart
+    navigate('/cart')
+  }
+}, [items.length, isProcessing, navigate])
 
   async function handlePlace() {
-    if (items.length === 0) return
-    setError('')
-    setIsProcessing(true)
-    
-    try {
-      const res = await placeOrder(items)
-      clear() // Clear the cart after successful order
-      navigate(`/order/${res.orderId}`, { replace: true }) // Replace history to prevent back navigation
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to place order')
-      setIsProcessing(false)
+  if (items.length === 0) return
+  setError('')
+  setIsProcessing(true)
+
+  try {
+    const res = await placeOrder(items)
+
+    // 🧠 Create an order record
+    const order = {
+      id: res.orderId,
+      items,
+      total,
+      date: new Date().toISOString(),
     }
+
+    // 🗄️ Save to localStorage
+    const existing = JSON.parse(localStorage.getItem('orders') || '[]')
+    existing.push(order)
+    localStorage.setItem('orders', JSON.stringify(existing))
+
+    // ✅ Clear cart & redirect
+    clear()
+    navigate(`/order/${res.orderId}`, { replace: true })
+  } catch (e) {
+    setError(e instanceof Error ? e.message : 'Failed to place order')
+    setIsProcessing(false)
   }
+}
+
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-8 animate-fadeIn">

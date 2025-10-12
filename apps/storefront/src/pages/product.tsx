@@ -59,14 +59,6 @@ export default function ProductPage() {
     )
   }, [product, products])
 
-  const groupedRelated = useMemo(() => {
-    const groups: ProductType[][] = []
-    for (let i = 0; i < related.length; i += 5) {
-      groups.push(related.slice(i, i + 5))
-    }
-    return groups
-  }, [related])
-
   if (!product) {
     return (
       <div className="flex justify-center items-center h-64 text-gray-500 animate-pulse">
@@ -78,17 +70,17 @@ export default function ProductPage() {
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* PRODUCT SECTION */}
-      <div className="bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-3xl shadow-md p-8 flex flex-col md:flex-row md:justify-start md:items-start gap-12">
+      <section className="bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-3xl shadow-md p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-10 md:gap-16">
         {/* LEFT: Image */}
-        <div className="flex-shrink-0 w-full md:w-[420px] flex justify-center md:justify-start">
-          <div className="bg-white rounded-2xl shadow-inner p-6 relative overflow-hidden w-[400px] h-[400px] flex justify-center items-center">
+        <div className="flex-shrink-0 w-full md:w-[45%] flex justify-center md:justify-start">
+          <div className="bg-white rounded-2xl shadow-inner p-4 sm:p-6 relative overflow-hidden w-full max-w-[420px] aspect-square flex justify-center items-center">
             <div className="absolute inset-0 bg-gradient-to-t from-gray-100/30 via-transparent to-white/40 pointer-events-none" />
             <Image
               src={product.image}
               alt={product.title}
-              width={300}
-              height={300}
-              className="transition-transform duration-500 hover:scale-105 hover:rotate-1"
+              width={320}
+              height={320}
+              className="object-contain transition-transform duration-500 hover:scale-105 hover:rotate-1"
             />
           </div>
         </div>
@@ -96,15 +88,15 @@ export default function ProductPage() {
         {/* RIGHT: Info */}
         <div className="flex-1 flex flex-col justify-center text-gray-800 space-y-6">
           <header>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight">
               {product.title}
             </h1>
-            <div className="mt-4 text-3xl font-semibold text-primary">
+            <div className="mt-4 text-2xl sm:text-3xl font-semibold text-primary">
               <Price value={product.price} />
             </div>
           </header>
 
-          <p className="text-gray-600 text-lg leading-relaxed max-w-prose">
+          <p className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-prose">
             {product.description}
           </p>
 
@@ -122,7 +114,7 @@ export default function ProductPage() {
                 })
                 navigate('/cart')
               }}
-              className="relative inline-flex items-center justify-center gap-2 px-6 py-3 text-lg font-semibold text-white rounded-xl shadow-lg 
+              className="relative inline-flex items-center justify-center gap-2 px-6 py-3 text-base sm:text-lg font-semibold text-white rounded-xl shadow-lg 
                          bg-gradient-to-r from-indigo-600 to-emerald-500 hover:from-indigo-500 hover:to-emerald-600 
                          hover:shadow-xl active:scale-[0.98] transition-all duration-300"
               aria-label={`Add ${product.title} to cart`}
@@ -157,29 +149,20 @@ export default function ProductPage() {
             </span>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* RELATED PRODUCTS */}
-      {groupedRelated.length > 0 && (
-        <section className="mt-20">
+      {related.length > 0 && (
+        <section className="mt-16 sm:mt-20">
           <h3 className="text-2xl font-bold mb-8 text-gray-900 tracking-tight flex items-center gap-2">
             <span className="w-1.5 h-6 bg-primary rounded-full" />
             Related Products
           </h3>
 
-          <div className="flex flex-col gap-8">
-            {groupedRelated.map((group, i) => (
-              <div key={i} className="flex justify-start gap-6 flex-wrap">
-                {group.map((p, j) => (
-                  <div
-                    key={p.id}
-                    className={`flex-1 min-w-[180px] max-w-[220px] ${
-                      j === 0 ? 'ml-[11rem]' : ''
-                    }`}
-                  >
-                    <ProductCard {...p} />
-                  </div>
-                ))}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8">
+            {related.map((p) => (
+              <div key={p.id} className="flex justify-center">
+                <ProductCard {...p} />
               </div>
             ))}
           </div>

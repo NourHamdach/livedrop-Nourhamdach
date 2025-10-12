@@ -45,15 +45,6 @@ export default function Catalog() {
     return out
   }, [products, q, sort, tag])
 
-  // Group products in chunks of 5
-  const groupedProducts = useMemo(() => {
-    const groups: Product[][] = []
-    for (let i = 0; i < filtered.length; i += 5) {
-      groups.push(filtered.slice(i, i + 5))
-    }
-    return groups
-  }, [filtered])
-
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* HEADER & CONTROLS */}
@@ -69,8 +60,8 @@ export default function Catalog() {
         </div>
 
         {/* RIGHT SIDE: SEARCH + SORT */}
-        <div className="flex items-center gap-6">
-          <div className="w-[14rem] sm:w-[16rem] md:w-[18rem]">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
+          <div className="w-full sm:w-[16rem] md:w-[18rem]">
             <Input
               id="search-products"
               value={q}
@@ -96,19 +87,24 @@ export default function Catalog() {
           </div>
 
           <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value as any)}
-            className="border border-gray-300 px-3 py-1.5 rounded-full text-sm focus:ring-2 focus:ring-indigo-300 
-                       focus:border-indigo-400 transition bg-white shadow-sm hover:shadow-md cursor-pointer"
-          >
-            <option value="asc">Price: low → high</option>
-            <option value="desc">Price: high → low</option>
-          </select>
+        value={sort}
+             onChange={(e) => setSort(e.target.value as any)}
+    className="border border-gray-300 px-3 py-1 rounded-full text-sm
+             focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400
+             transition bg-white shadow-sm hover:shadow-md cursor-pointer
+             w-full sm:w-[10rem] md:w-[8rem] lg:w-[7rem] max-w-[10rem]
+             sm:ml-2"
+            aria-label="Sort products by price"
+            >
+  <option value="asc">Low → High</option>
+  <option value="desc">High → Low</option>
+</select>
+
         </div>
       </div>
 
       {/* TAG FILTERS */}
-      <div className="mt-8 flex flex-wrap gap-x-6 gap-y-4 mb-10">
+      <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-6 mb-10">
         <Button
           variant={tag === '' ? 'primary' : 'ghost'}
           size="sm"
@@ -119,34 +115,24 @@ export default function Catalog() {
         </Button>
 
         {tags.map((t) => (
-          <div key={t} className="mr-3 mb-2">
-            <Button
-              variant={tag === t ? 'primary' : 'ghost'}
-              size="sm"
-              className="transition-all"
-              onClick={() => setTag(t)}
-            >
-              {t}
-            </Button>
-          </div>
-        ))} 
+          <Button
+            key={t}
+            variant={tag === t ? 'primary' : 'ghost'}
+            size="sm"
+            className="transition-all"
+            onClick={() => setTag(t)}
+          >
+            {t}
+          </Button>
+        ))}
       </div>
 
-      {/* PRODUCT ROWS */}
+      {/* PRODUCT GRID */}
       <CatalogTemplate products={filtered}>
-        <div className="flex flex-col gap-8">
-          {groupedProducts.map((group, i) => (
-            <div key={i} className="flex justify-start gap-6 flex-wrap">
-              {group.map((p, j) => (
-                <div
-                  key={p.id}
-                  className={`flex-1 min-w-[180px] max-w-[220px] ${
-                    j === 0 ? 'ml-[10rem]' : ''
-                  }`}
-                >
-                  <ProductCard {...p} />
-                </div>
-              ))}
+      <div className="grid grid-cols-3 sm:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+          {filtered.map((p) => (
+            <div key={p.id} className="flex justify-center">
+              <ProductCard {...p} />
             </div>
           ))}
         </div>
