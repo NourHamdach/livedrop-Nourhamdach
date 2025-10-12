@@ -1,0 +1,16 @@
+# Ignore node_modules for the whole monorepo
+# Only ignore the frontend app’s build/deps/env
+apps/storefront/node_modules
+apps/storefront/dist
+apps/storefront/build
+
+# lock files for that app (ignore if you don’t want to commit them)
+apps/storefront/pnpm-lock.yaml
+apps/storefront/yarn.lock
+apps/storefront/package-lock.json
+
+# env files
+apps/storefront/.env
+apps/storefront/.env.*.local
+
+apps/storefront/*.log
