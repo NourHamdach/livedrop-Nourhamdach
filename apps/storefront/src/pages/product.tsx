@@ -3,8 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   getProduct,
   listProducts,
-  type Product as ProductType,
+  
 } from '../lib/api'
+import { Product as ProductType } from '../types'
 import Image from '../components/atoms/Image'
 import Price from '../components/atoms/Price'
 import Button from '../components/atoms/Button'

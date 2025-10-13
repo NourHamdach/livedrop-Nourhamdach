@@ -1,16 +1,9 @@
 // ==============================
 // Product Types & Cache
 // ==============================
-
-export type Product = {
-  id: string
-  title: string
-  price: number
-  image: string
-  tags: string[]
-  stockQty: number
-  description?: string
-}
+//src/lib/api.ts
+import { OrderInfo } from '../types'
+import { Product } from '../types'
 
 let productsCache: Product[] | null = null
 
@@ -58,12 +51,7 @@ export async function getProduct(id: string): Promise<Product | null> {
 // ==============================
 // Order Handling
 // ==============================
-export type OrderInfo = {
-  id: string
-  status: 'Placed' | 'Packed' | 'Shipped' | 'Delivered'
-  carrier?: string
-  eta?: string
-}
+
 
 const orders: Record<string, OrderInfo> = {}
 
@@ -90,41 +78,60 @@ export async function placeOrder(
   const products = await listProducts()
 
   // Validate stock
-  for (const item of cart) {
+  const detailedItems = cart.map((item) => {
     const product = products.find((p) => p.id === item.id)
     if (!product) throw new Error(`Product with ID "${item.id}" not found.`)
     if (product.stockQty < item.qty)
       throw new Error(`Not enough stock for "${product.title}".`)
-  }
+
+    return {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      qty: item.qty,
+    }
+  })
 
   updateStock(cart)
 
-  // Create order with unique ID
+  // Compute total price safely
+  const total = detailedItems.reduce((sum, i) => sum + i.price * i.qty, 0)
+
+  // Create unique order ID
   const orderId = Math.random().toString(36).substring(2, 12).toUpperCase()
-  orders[orderId] = { id: orderId, status: 'Placed' }
+  orders[orderId] = { id: orderId, status: "Placed" }
 
-  // Persist in localStorage immediately
-  const existing = JSON.parse(localStorage.getItem('orders') || '[]')
-  existing.push({
+  // Build a validated order record
+  const newOrder = {
     id: orderId,
-    items: cart,
+    items: detailedItems,
+    total,
     date: new Date().toISOString(),
-  })
-  localStorage.setItem('orders', JSON.stringify(existing))
+  }
 
-  // Simulated live status progression
-  setTimeout(() => (orders[orderId].status = 'Packed'), 3000)
+  // Save cleanly to localStorage
+  const existing = JSON.parse(localStorage.getItem("orders") || "[]")
+  if (!Array.isArray(existing)) {
+    console.warn("Corrupted order data in localStorage — resetting.")
+  }
+  const safeOrders = Array.isArray(existing) ? existing : []
+  safeOrders.push(newOrder)
+  localStorage.setItem("orders", JSON.stringify(safeOrders))
+
+  // Simulated live status updates
+  setTimeout(() => (orders[orderId].status = "Packed"), 3000)
   setTimeout(() => {
-    orders[orderId].status = 'Shipped'
-    orders[orderId].carrier = 'FastShip'
+    orders[orderId].status = "Shipped"
+    orders[orderId].carrier = "FastShip"
     orders[orderId].eta = new Date(
       Date.now() + 3 * 24 * 60 * 60 * 1000
     ).toLocaleDateString()
   }, 7000)
-  setTimeout(() => (orders[orderId].status = 'Delivered'), 15000)
+  setTimeout(() => (orders[orderId].status = "Delivered"), 15000)
 
   return { orderId }
 }
+
 
 /**
  * Get order status by ID — uses in-memory record first, then localStorage fallback.

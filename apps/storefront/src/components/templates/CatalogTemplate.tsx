@@ -1,5 +1,5 @@
 import React from 'react'
-import { Product } from '../../lib/api'
+import { Product } from '../../types'
 
 type Props = {
   products: Product[]

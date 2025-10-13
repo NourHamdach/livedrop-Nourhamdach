@@ -65,40 +65,36 @@ function normalizeFaqs(faqsRaw) {
 
 // --- Route ---
 app.post("/api/support", async (req, res) => {
-  if (!groq) {
-    return res.status(503).json({ error: "Groq not configured" })
-  }
+  if (!groq) return res.status(503).json({ error: "Groq not configured" })
 
   const reqId = Math.random().toString(36).slice(2, 8)
   try {
-    const { query, faqs } = req.body || {}
-
-    // Basic validation
-    const userQuery = clampStr(String(query ?? ""), 1200).trim()
-    if (!userQuery) {
-      return res.status(400).json({ error: "Missing 'query' string" })
-    }
+    const { query, faqs, order } = req.body || {}
+  console.log(`[${reqId}] Incoming request:`, { query, faqs, order })
+    const userQuery = String(query || "").trim()
+    if (!userQuery) return res.status(400).json({ error: "Missing query" })
 
     const faqsNorm = normalizeFaqs(faqs)
-
     const faqSection = faqsNorm.length
       ? faqsNorm
           .map(
             (f, i) =>
-              `FAQ #${i + 1} (${f.qid || "no-id"}${typeof f.confidence === "number" ? `, conf=${f.confidence.toFixed(2)}` : ""}):\nQ: ${f.question}\nA: ${f.answer}`
+              `FAQ #${i + 1} (${f.qid || "no-id"}):\nQ: ${f.question}\nA: ${f.answer}`
           )
           .join("\n\n")
       : "No FAQs provided."
+ console.log(`[${reqId}] FAQ section:\n${faqSection}`)
+    const orderSection = order? `Order: ${order}` : "No order context provided."
+      console.log(`[${reqId}] Order section:\n${orderSection}`)
 
     const messages = [
       { role: "system", content: SYSTEM_PROMPT },
       {
         role: "user",
-        content: `User:\n${userQuery}\n\nCandidate FAQs:\n${faqSection}`,
+        content: `User:\n${userQuery}\n\n${orderSection}\n\nCandidate FAQs:\n${faqSection}`,
       },
     ]
 
-    // Try primary; on model_not_found fall back automatically
     async function createWith(model) {
       return groq.chat.completions.create({
         model,
@@ -113,19 +109,16 @@ app.post("/api/support", async (req, res) => {
     } catch (e) {
       const msg = String(e?.response?.data || e?.message || e)
       if (/model_not_found|decommissioned|does not exist/i.test(msg)) {
-        console.warn(`[${reqId}] Model ${PRIMARY_MODEL} unavailable, falling back to ${FALLBACK_MODEL}`)
         completion = await createWith(FALLBACK_MODEL)
-      } else {
-        throw e
-      }
+      } else throw e
     }
 
     const answer = completion?.choices?.[0]?.message?.content?.trim() || ""
-    return res.json({ answer })
+    res.json({ answer })
   } catch (err) {
-    console.error(`[${reqId}] Groq error:`, err?.response?.data || err)
-    return res.status(500).json({
-      error: "Groq API call failed.",
+    console.error(`[${reqId}] Groq error:`, err)
+    res.status(500).json({
+      error: "Groq API call failed",
       details: err?.response?.data || err.message || String(err),
     })
   }

@@ -1,6 +1,8 @@
+//
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getOrderStatus } from '../lib/api'
+import Button from '../components/atoms/Button'
 
 type OrderStatusData = {
   status: 'Placed' | 'Packed' | 'Shipped' | 'Delivered'
@@ -57,12 +59,14 @@ export default function OrderStatus() {
     return (
       <main className="max-w-xl mx-auto px-4 py-10 text-center">
         <p className="text-gray-500 text-lg">Order not found or invalid ID.</p>
-        <button
+        <Button
+        variant="secondary"
+          size="md"
           onClick={() => navigate('/')}
           className="mt-4 px-4 py-2 rounded bg-primary-600 hover:bg-primary-700 text-white transition"
         >
           Back to Home
-        </button>
+        </Button>
       </main>
     )
 
@@ -72,7 +76,7 @@ export default function OrderStatus() {
   return (
     <main className="max-w-xl mx-auto px-4 py-10 animate-fadeIn">
       <h1 className="text-3xl font-display font-bold text-gray-800 mb-6">
-        Order #{id?.slice(-4)}
+        Order #{id}
       </h1>
 
       {/* Progress timeline */}

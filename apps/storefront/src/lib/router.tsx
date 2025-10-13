@@ -1,3 +1,4 @@
+// apps/storefront/src/lib/router.tsx
 import React, { Suspense } from 'react'
 import { ShoppingCart, MessageSquare } from 'lucide-react'
 import {
@@ -18,6 +19,8 @@ const Product = React.lazy(() => import('../pages/product'))
 const Cart = React.lazy(() => import('../pages/cart'))
 const Checkout = React.lazy(() => import('../pages/checkout'))
 const OrderStatus = React.lazy(() => import('../pages/order-status'))
+const OrdersList = React.lazy(() => import('../pages/orders'))
+
 const SupportPanel = React.lazy(() => import('../components/organisms/SupportPanel'))
 
 function Layout() {
@@ -155,6 +158,8 @@ export default function AppRouter() {
             <Route path="checkout" element={<Checkout />} />
             <Route path="order/:id" element={<OrderStatus />} />
           </Route>
+          <Route path="orders" element={<OrdersList />} />
+
 
           {/* ✅ Support Page Route */}
           <Route path="/support" element={<SupportPanel />} />
