@@ -1,12 +1,89 @@
-That’s already a very solid guide — clear, executable, and project-specific.
-Here’s a polished version with tightened Markdown syntax, fixed code fencing, consistent emoji headings, and small corrections for readability and reliability (for example, one of your triple backticks had four, which can break formatting).
 
-You can safely replace your file with this version:
 
+# 🚀 Deployment Guide
 ---
 
-````markdown
-# 🚀 Deployment Guide
+## 🍃 MongoDB Atlas Setup
+
+1. Go to [https://www.mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas) and sign up or log in.
+2. Create a new **Project** and then a **Cluster** (free tier is fine for dev/testing).
+3. Click **Database Access** → Add a database user (save username/password).
+4. Click **Network Access** → Add IP Address → Allow access from anywhere (`0.0.0.0/0`) for dev, or restrict as needed.
+5. Click **Clusters** → Connect → Choose "Connect your application" and copy the connection string (looks like `mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/<dbname>?retryWrites=true&w=majority`).
+6. Use this string as your `MONGO_URI`/`MONGODB_URI` in backend env vars.
+
+---
+---
+
+## 🤖 LLM Setup: /generate Endpoint (Colab Week 3)
+
+To enable AI-powered support, you need a running LLM endpoint that exposes a `/generate` POST route.
+
+**Option 1: Use the provided Week 3 Colab notebook**
+1. Open the Week 3 Colab (see `notebooks/llm_deployment.ipynb`).
+2. Run all cells or (Cell 1->Cell 2->Cell 5->pip install flask cors->Cell 8->Cell 10->Cell 11->Cell 12(recommended)). The notebook will start a small Flask server with a `/generate` endpoint.
+3. Expose the Colab port using `ngrok` (see notebook instructions) or Colab's built-in public URL.
+4. Copy the public `/generate` endpoint URL (e.g., `https://xxxx.ngrok.io/generate`).
+5. Set this as `LLM_GENERATE_URL` in your backend environment.
+
+**Option 2: Custom local server**
+1. Run a local Flask/FastAPI server with a `/generate` POST endpoint that accepts `{ prompt }` and returns `{ text }`.
+2. Use `ngrok http 5000` (or your port) to expose it.
+3. Set `LLM_GENERATE_URL` to the public URL.
+
+
+---
+---
+
+## 🔑 Environment Variables
+
+**Backend (API):**
+
+```env
+PORT=3001
+MONGO_URI=your-mongodb-connection-string
+FRONTEND_URL=your-frontend-url
+NODE_ENV=production
+LLM_GENERATE_URL=https://xxxx.ngrok.io/generate  # (optional, for assistant)
+```
+
+**Frontend (Vercel):**
+
+```env
+VITE_BACKEND_URL=https://your-backend-url
+```
+
+---
+---
+
+## 🏠 How to Run Locally
+
+1. **Clone the repo:**
+   ```bash
+   git clone <your-repo-url>
+   cd livedrop-Nourhamdach
+   ```
+2. **Install dependencies:**
+   ```bash
+   cd apps/api && npm install
+   cd ../storefront && npm install
+   ```
+3. **Set up your `.env` files** in both `apps/api` and `apps/storefront` as above.
+4. **Start MongoDB** (Atlas or local, as configured).
+5. **Run the backend:**
+   ```bash
+   cd apps/api
+   npm run dev
+   ```
+6. **Run the frontend:**
+   ```bash
+   cd apps/storefront
+   npm run dev
+   ```
+7. **(Optional) Start LLM server** (see LLM setup above).
+8. Visit [http://localhost:5173](http://localhost:5173) (frontend) and [http://localhost:3001/api/health](http://localhost:3001/api/health) (backend health).
+
+---
 
 **LiveDrop URLs**
 - Backend (Render): [https://livedrop-nourhamdach.onrender.com](https://livedrop-nourhamdach.onrender.com)  
@@ -149,4 +226,6 @@ After both deployments:
  full-stack app is now live:
 Frontend → **Vercel**
 Backend → **Render/Railway**
+
+
 
