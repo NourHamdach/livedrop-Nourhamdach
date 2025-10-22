@@ -1,3 +1,4 @@
+// apps/storefront/src/components/atoms/Price.tsx
 import React from 'react'
 import { formatCurrency } from '../../lib/format'
 

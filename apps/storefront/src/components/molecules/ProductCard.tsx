@@ -1,3 +1,4 @@
+//storefront/src/components/molecules/ProductCard.tsx
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Image from '../atoms/Image'

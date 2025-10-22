@@ -1,6 +1,6 @@
-// apps/storefront/src/lib/router.tsx
-import React, { Suspense } from 'react'
-import { ShoppingCart, MessageSquare } from 'lucide-react'
+// src/lib/router.tsx
+import React, { Suspense } from "react";
+import { ShoppingCart, MessageSquare } from "lucide-react";
 import {
   BrowserRouter,
   Routes,
@@ -8,24 +8,26 @@ import {
   Link,
   Outlet,
   useNavigate,
-} from 'react-router-dom'
-import { useStore } from './store'
-import Button from '../components/atoms/Button'
-import Image from '../components/atoms/Image'
+  Navigate,
+} from "react-router-dom";
+import { useStore } from "./store";
+import Button from "../components/atoms/Button";
+import Image from "../components/atoms/Image";
+const AdminDashboard = React.lazy(() => import("../pages/AdminDashboard"));
 
 // Lazy pages
-const Catalog = React.lazy(() => import('../pages/catalog'))
-const Product = React.lazy(() => import('../pages/product'))
-const Cart = React.lazy(() => import('../pages/cart'))
-const Checkout = React.lazy(() => import('../pages/checkout'))
-const OrderStatus = React.lazy(() => import('../pages/order-status'))
-const OrdersList = React.lazy(() => import('../pages/orders'))
-
-const SupportPanel = React.lazy(() => import('../components/organisms/SupportPanel'))
-
+const Catalog = React.lazy(() => import("../pages/catalog"));
+const Product = React.lazy(() => import("../pages/product"));
+const Cart = React.lazy(() => import("../pages/cart"));
+const Checkout = React.lazy(() => import("../pages/checkout"));
+const OrderPage = React.lazy(() => import("../pages/order"));
+const OrdersList = React.lazy(() => import("../pages/orders"));
+const SupportPanel = React.lazy(() => import("../components/organisms/SupportPanel"));
+const Login = React.lazy(() => import("../pages/UserLogin")); // ✅ new
+const Support = React.lazy(() => import("../pages/Support")); // new
 function Layout() {
-  const count = useStore((s) => s.items.reduce((a, b) => a + b.qty, 0))
-  const nav = useNavigate()
+  const count = useStore((s) => s.items.reduce((a, b) => a + b.qty, 0));
+  const nav = useNavigate();
 
   return (
     <div className="min-h-screen relative flex flex-col font-sans text-gray-900 bg-gradient-to-b from-gray-50 via-white to-gray-100 overflow-visible">
@@ -42,9 +44,9 @@ function Layout() {
               alt="Storefront logo"
               className="w-[160px] h-[160px] object-contain transition-transform duration-300 group-hover:scale-110"
               onError={(e) => {
-                const target = e.target as HTMLImageElement
-                target.src = '/fallback-logo.svg'
-                target.alt = 'Fallback logo'
+                const target = e.target as HTMLImageElement;
+                target.src = "/fallback-logo.svg";
+                target.alt = "Fallback logo";
               }}
             />
           </Link>
@@ -77,11 +79,10 @@ function Layout() {
 
           {/* Cart + Checkout + Support Buttons */}
           <nav className="flex flex-col items-center gap-3">
-            {/* 🛒 Cart Button with count beside icon */}
             <Button
               variant="secondary"
               size="md"
-              onClick={() => nav('/cart')}
+              onClick={() => nav("/cart")}
               className="flex items-center justify-center gap-2 px-3 py-2 rounded-full hover:bg-gray-100 transition"
             >
               <ShoppingCart className="w-7 h-6 text-gray-800" />
@@ -92,19 +93,34 @@ function Layout() {
               )}
             </Button>
 
-            {/* Checkout + Support Buttons */}
             <div className="flex flex-col gap-2 items-center">
               <Button
                 variant="secondary"
                 size="md"
-                onClick={() => nav('/checkout')}
+                onClick={() => nav("/checkout")}
                 className="w-28"
               >
                 Checkout
               </Button>
-
               <Button
-                onClick={() => nav('/support')}
+                variant="secondary"
+                size="md"
+                onClick={() => nav("/admin/dashboard")}
+                className="w-28"
+              >
+                Dashboard
+              </Button>
+
+              {/* <Button
+                onClick={() => nav("/supportPanel")}
+                aria-label="Open support chat"
+                className="w-28 bg-indigo-600 hover:bg-indigo-700 text-white flex items-center justify-center gap-2 rounded-lg shadow-md transition"
+              >
+                <MessageSquare className="w-5 h-5" />
+                <span>SupportPanel</span>
+              </Button> */}
+              <Button
+                onClick={() => nav("/support")}
                 aria-label="Open support chat"
                 className="w-28 bg-indigo-600 hover:bg-indigo-700 text-white flex items-center justify-center gap-2 rounded-lg shadow-md transition"
               >
@@ -128,7 +144,7 @@ function Layout() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
 export default function AppRouter() {
@@ -151,20 +167,27 @@ export default function AppRouter() {
         }
       >
         <Routes>
+          {/* Protected routes under main layout */}
           <Route path="/" element={<Layout />}>
             <Route index element={<Catalog />} />
             <Route path="p/:id" element={<Product />} />
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />
-            <Route path="order/:id" element={<OrderStatus />} />
+            <Route path="order/:id" element={<OrderPage />} />
+            <Route path="admin/dashboard" element={<AdminDashboard />} /> 
+            <Route path="/support" element={<Support />} />
           </Route>
+
+          {/* Standalone routes */}
           <Route path="orders" element={<OrdersList />} />
+          <Route path="/supportPanel" element={<SupportPanel />} />
+          <Route path="/login" element={<Login />} /> {/* ✅ added login route */}
+         
 
-
-          {/* ✅ Support Page Route */}
-          <Route path="/support" element={<SupportPanel />} />
+          {/* Catch-all for invalid routes */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
-  )
+  );
 }

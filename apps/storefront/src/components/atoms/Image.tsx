@@ -1,28 +1,43 @@
-import React from 'react'
+import React from "react";
 
 type Props = {
-  src: string
-  alt: string
-  className?: string
-  width?: number
-  height?: number
-}
+  src?: string; // make it optional
+  alt: string;
+  className?: string;
+  width?: number;
+  height?: number;
+};
 
 /**
- * Image component with fixed default dimensions (200x200)
- * Automatically optimizes Unsplash URLs and keeps aspect ratio using object-cover
+ * Safe Image component with fixed default dimensions (300x300)
+ * Handles undefined sources gracefully and optimizes Unsplash URLs
  */
 export default function Image({
   src,
   alt,
-  className = '',
+  className = "",
   width = 300,
   height = 300,
 }: Props) {
-  // Optimize Unsplash images by enforcing width parameter
-  const optimizedSrc = src.includes('unsplash.com')
-    ? src.replace(/w=\d+/, `w=${width}`).replace(/&.*$/, '') + `&q=75`
-    : src
+  // ✅ Handle missing or undefined src
+  if (!src) {
+    return (
+      <div
+        className={`bg-gray-100 flex items-center justify-center rounded-lg text-gray-400 text-xs ${className}`}
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+        }}
+      >
+        No Image
+      </div>
+    );
+  }
+
+  // ✅ Optimize Unsplash images only if src is valid
+  const optimizedSrc = src.includes("unsplash.com")
+    ? src.replace(/w=\d+/, `w=${width}`).replace(/&.*$/, "") + `&q=75`
+    : src;
 
   return (
     <img
@@ -36,9 +51,13 @@ export default function Image({
       style={{
         width: `${width}px`,
         height: `${height}px`,
-        objectFit: 'cover',
-        borderRadius: '0.75rem',
+        objectFit: "cover",
+        borderRadius: "0.75rem",
+      }}
+      onError={(e) => {
+        // ✅ fallback placeholder on error
+        (e.target as HTMLImageElement).src = "/placeholder.png";
       }}
     />
-  )
+  );
 }

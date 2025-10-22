@@ -1,16 +1,42 @@
-# Ignore node_modules for the whole monorepo
-# Only ignore the frontend app’s build/deps/env
-apps/storefront/node_modules
-apps/storefront/dist
-apps/storefront/build
+# ======================================================
+# Monorepo Git Ignore — Livedrop Nourhamdach
+# ======================================================
 
-# lock files for that app (ignore if you don’t want to commit them)
-apps/storefront/pnpm-lock.yaml
-apps/storefront/yarn.lock
-apps/storefront/package-lock.json
+# Node modules (ignore everywhere)
+**/node_modules/
 
-# env files
-apps/storefront/.env
-apps/storefront/.env.*.local
+# Logs
+**/*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
 
-apps/storefront/*.log
+# Environment files (ignore in all apps)
+**/.env
+**/.env.*.local
+
+# ======================================================
+# Build Artifacts
+# ======================================================
+**/dist/
+**/build/
+**/.cache/
+
+# ======================================================
+# Package Manager Lock Files
+# ======================================================
+**/package-lock.json
+**/yarn.lock
+**/pnpm-lock.yaml
+
+# ======================================================
+# OS & Editor Files
+# ======================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+.vscode/
+.idea/
+*.swp

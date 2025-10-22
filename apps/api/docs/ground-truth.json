@@ -1,0 +1,115 @@
+
+[
+  {
+    "id": "Returns3.1",
+    "question": "What is your return window and how do I start a return?",
+    "answer": "We accept returns within 30 days of delivery. To start a return, visit your Orders page, select the order and item, and choose \"Request Return\". Pack the item in its original condition and include any tags. Once we receive and inspect the item, refunds are processed to your original payment method within 5-7 business days.",
+    "category": "returns",
+    "lastUpdated": "2025-10-15T00:00:00Z"
+  },
+  {
+    "id": "Returns3.2",
+    "question": "Do you offer exchanges or store credit?",
+    "answer": "Yes — exchanges are available within the 30-day return window, subject to stock availability. If you'd prefer store credit instead of a refund, select \"Store Credit\" during the return process; store credit does not expire and can be used immediately.",
+    "category": "returns",
+    "lastUpdated": "2025-10-10T00:00:00Z"
+  },
+  {
+    "id": "Shipping2.1",
+    "question": "What shipping options and costs do you offer?",
+    "answer": "We offer Standard (5-7 business days, $5.99), Express (2-3 business days, $12.99), and Overnight (1 business day, $24.99). Orders over $50 qualify for free Standard shipping. Shipping rates and times are displayed at checkout before you pay.",
+    "category": "shipping",
+    "lastUpdated": "2025-10-12T00:00:00Z"
+  },
+  {
+    "id": "Shipping2.2",
+    "question": "How do I track my shipment?",
+    "answer": "Once your order ships we email you a tracking number and carrier link. You can also view tracking on the Order Details page in your account. If tracking isn't available within 48 hours of shipment, contact support and we'll investigate. [Shipping2.1]",
+    "category": "shipping",
+    "lastUpdated": "2025-10-12T00:00:00Z"
+  },
+  {
+    "id": "Shipping2.3",
+    "question": "Do you ship internationally?",
+    "answer": "Yes. We ship to many countries; international shipping costs and delivery estimates vary by destination. Taxes, duties, and customs fees may apply and are the responsibility of the recipient. Delivery timelines for international shipments can be longer than domestic estimates.",
+    "category": "shipping",
+    "lastUpdated": "2025-09-30T00:00:00Z"
+  },
+  {
+    "id": "Warranty1.1",
+    "question": "Do your products come with a warranty?",
+    "answer": "Most electronics include a 1-year limited manufacturer's warranty. Apparel and accessories have a 30-day workmanship guarantee. Warranty coverage and claim instructions are listed on the product page when applicable.",
+    "category": "warranty",
+    "lastUpdated": "2025-09-20T00:00:00Z"
+  },
+  {
+    "id": "Warranty1.2",
+    "question": "How do I file a warranty claim?",
+    "answer": "To file a warranty claim, contact support with your order number, photos of the issue, and a brief description. We'll confirm coverage and walk you through repair, replacement, or refund options.",
+    "category": "warranty",
+    "lastUpdated": "2025-09-20T00:00:00Z"
+  },
+  {
+    "id": "Privacy4.1",
+    "question": "How do you use and protect my personal data?",
+    "answer": "We use personal data to process orders, provide customer support, and improve our services. We retain data only as long as necessary. We use industry-standard security practices to protect data and do not sell personal information to third parties. For full details see our Privacy Policy.",
+    "category": "privacy",
+    "lastUpdated": "2025-08-01T00:00:00Z"
+  },
+  {
+    "id": "Payment5.1",
+    "question": "What payment methods are accepted?",
+    "answer": "We accept major credit and debit cards (Visa, MasterCard, American Express), PayPal, and Apple Pay where available. Payments are processed by secure third-party processors; we do not store full card numbers on our systems.",
+    "category": "payment",
+    "lastUpdated": "2025-07-15T00:00:00Z"
+  },
+  {
+    "id": "Cancellations6.1",
+    "question": "Can I cancel or modify my order after placing it?",
+    "answer": "Orders can be canceled or modified within 30 minutes of placement from the Orders page. After that window, we may have already started fulfillment and cancellation may not be possible; in that case please request a return once you receive the item.",
+    "category": "cancellations",
+    "lastUpdated": "2025-10-05T00:00:00Z"
+  },
+  {
+    "id": "Preorder7.1",
+    "question": "Do you accept preorders and when will they ship?",
+    "answer": "We offer preorders for selected items. Estimated ship dates are shown on the product page. Preorders are charged at checkout and ship when inventory becomes available; you will receive tracking information when the item ships.",
+    "category": "preorder",
+    "lastUpdated": "2025-09-01T00:00:00Z"
+  },
+  {
+    "id": "Discount8.1",
+    "question": "How do promo codes and discounts work?",
+    "answer": "Enter promo codes at checkout to apply discounts. Some promotions require minimum spend or are limited to specific products. Promo codes cannot be combined unless stated otherwise. Discounts applied to an order will be reflected on the final checkout total.",
+    "category": "discounts",
+    "lastUpdated": "2025-10-11T00:00:00Z"
+  },
+  {
+    "id": "Gift9.1",
+    "question": "Do you sell or accept gift cards?",
+    "answer": "Yes, we offer electronic gift cards available in several denominations. Gift cards can be redeemed at checkout and are non-refundable unless required by law.",
+    "category": "giftcards",
+    "lastUpdated": "2025-08-15T00:00:00Z"
+  },
+  {
+    "id": "Taxes10.1",
+    "question": "Are taxes included in the price?",
+    "answer": "Prices shown may not include taxes. Taxes are calculated at checkout based on your shipping address and displayed before payment. For international orders, import duties and taxes may apply and are payable by the recipient.",
+    "category": "taxes",
+    "lastUpdated": "2025-09-10T00:00:00Z"
+  },
+  {
+    "id": "Damaged11.1",
+    "question": "What do I do if my item arrives damaged?",
+    "answer": "If an item arrives damaged, contact support within 7 days with photos of the damage and the packaging. We'll provide a return shipping label and a replacement or a full refund upon receipt and inspection of the damaged item.",
+    "category": "damaged",
+    "lastUpdated": "2025-10-16T00:00:00Z"
+  },
+  {
+    "id": "Missing12.1",
+    "question": "My shipment shows delivered but I didn't receive it — what now?",
+    "answer": "If tracking shows delivered but you haven't received the package, check with neighbors and building management first. If still missing, contact support with your order number and tracking info; we'll open a carrier claim and help resolve it.",
+    "category": "shipping",
+    "lastUpdated": "2025-10-16T00:00:00Z"
+  }
+]

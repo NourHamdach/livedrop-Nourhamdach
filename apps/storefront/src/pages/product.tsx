@@ -1,3 +1,4 @@
+//storefront/src/pages/product.tsx
 import React, { useEffect, useMemo, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
@@ -11,6 +12,7 @@ import Price from '../components/atoms/Price'
 import Button from '../components/atoms/Button'
 import ProductCard from '../components/molecules/ProductCard'
 import { useStore } from '../lib/store'
+
 
 export default function ProductPage() {
   const { id } = useParams()

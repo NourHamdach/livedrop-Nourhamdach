@@ -1,3 +1,4 @@
+// src/components/atoms/Button.tsx
 import React from 'react'
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
