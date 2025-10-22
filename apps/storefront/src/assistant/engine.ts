@@ -12,7 +12,7 @@ export type SupportResult = {
 }
 
 // ---------- Config ----------
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+const BACKEND_URL ="http://localhost:5000"
 const CONFIDENCE_THRESHOLD = 0.6
 const MAX_QUERY_LEN = 800
 const AGENT_TIMEOUT_MS = 15000

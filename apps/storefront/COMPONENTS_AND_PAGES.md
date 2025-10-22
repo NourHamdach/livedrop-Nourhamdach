@@ -1,5 +1,14 @@
 Storefront components and pages (updated)
 
+Last updated: 2025-10-22
+
+Notes: The `SupportPanel` organism integrates with the backend assistant via `POST /api/assistant`. The assistant returns structured responses including `intent`, `text`, `functionsCalled`, and optional `citations` used to render policy snippets.
+
+Last updated: 2025-10-22
+
+Changelog:
+- 2025-10-22: Added last-updated header and clarified SupportPanel behavior for assistant integration.
+
 This document summarizes the React components and pages currently present in `apps/storefront/src` after your recent edits. It is based on the live component and page sources in the repository.
 
 Top-level structure
@@ -84,7 +93,25 @@ Top-level structure
   - Maintains local chat history with messages from `user` and `bot`.
   - Sends queries to `askSupport` (from `assistant/engine`) and renders answers.
   - Shows a typing indicator and focuses the input on mount.
+  - Input is a controlled `Input` atom and sends messages via the `askSupport` helper which returns `{ answer, qid }`.
+  - Displays bot answers and attaches a `qid` when returned; shows an empty-state prompt when there are no messages.
 - Notes: Uses `Button` and `Input` atoms; navigates back with the header button.
+
+---
+
+## Pages (routes)
+
+### `Support` — `src/pages/Support.tsx`
+- Route: `/support` (expected)
+- Purpose: Full-page support chat with a scrolling history and message composer.
+- Behavior:
+  - Uses local state for messages and `fetch` to call the backend assistant at `POST ${VITE_BACKEND_URL || http://localhost:3001}/api/assistant`.
+  - Sends `{ input, context: { customerId } }` where `customerId` is read from `localStorage`.
+  - Renders messages similarly to `SupportPanel` (user aligned right, bot left). Bot message text is taken from `data.text` returned by the assistant.
+  - Gracefully handles network errors and shows a friendly failure message from the bot.
+  - Auto-scrolls when new messages are added and supports sending on Enter (no shift).
+
+Notes: The repo contains both an embedded organism (`SupportPanel`) suitable for composition inside other pages and a full-page `Support` route that directly calls the backend API. Keep these two components in sync regarding message UIs and behavior.
 
 ---
 
@@ -96,50 +123,88 @@ Top-level structure
 
 ---
 
-## Pages (routes)
+## Pages
 
-These are the top-level route components inside `src/pages`.
+Below are the top-level pages under `apps/storefront/src/pages` and their current behavior.
 
-### `Catalog` — `pages/catalog.tsx`
-- Route: `/` (catalog listing)
-- Purpose: Product browsing UI with search, tag filters and sort controls.
+### `Catalog` — `src/pages/catalog.tsx`
+- Route: `/`
+- Purpose: Product listing and discovery UI.
 - Behavior:
-  - Loads products with `listProducts()` (from `lib/api`).
-  - Supports free-text search, tag filters and price sort (`asc` / `desc`).
-  - Renders a grid of `ProductCard` components inside `CatalogTemplate`.
+  - Loads products via `listProducts()` and maintains local loading/error states.
+  - Provides free-text search (tokenized), tag filters (collected from product tags), and price sort (`asc` | `desc`).
+  - Shows explicit empty and error states with retry actions.
+  - Renders product grid using `ProductCard` inside `CatalogTemplate`.
 
-### `Product` — `pages/product.tsx`
-- Route: `/p/:id` (product detail)
-- Purpose: Detailed product page with image, description, price and add-to-cart action.
+### `Product` — `src/pages/product.tsx`
+- Route: `/p/:id`
+- Purpose: Product detail page.
 - Behavior:
-  - Fetches product using `getProduct(id)` and falls back to `/404` when missing.
-  - Adds product to cart via `useStore.add` and navigates to `/cart`.
+  - Fetches the product via `getProduct(id)` and falls back to `/404` when not found.
+  - Renders image, price (`Price` atom), description (uses `fallbackDescription` when empty), stock badge, and an Add to Cart CTA.
+  - Adds to cart via `useStore.add` and navigates to `/cart`.
   - Loads related products by tag using `listProducts()`.
-  - Uses a `fallbackDescription` if the product description is empty.
 
-### `Cart` — `pages/cart.tsx`
+### `Cart` — `src/pages/cart.tsx`
 - Route: `/cart`
-- Purpose: View and manage cart contents.
+- Purpose: View and manage current cart contents.
 - Behavior:
-  - Reads cart state from `useStore` and displays items via `CartLineItem`.
-  - Allows clearing the cart, removing items and adjusting quantities.
-  - Shows the cart total.
+  - Reads cart items from `useStore` and renders `CartLineItem` for each.
+  - Provides actions to change quantity, remove items, clear cart, and shows cart total.
+  - Empty state links back to catalog.
 
-### `Checkout` — `pages/checkout.tsx`
+### `Checkout` — `src/pages/checkout.tsx`
 - Route: `/checkout`
-- Purpose: Demo checkout flow (no payment integration).
-- Behavior (current):
-  - Calls `placeOrder(items)`  to create an order and store to local storage  and navigates to `/order/{orderId}` on success.
-   .
-  - Displays errors with a `Retry` action (uses a `Button`), shows `Placing Order…` while processing, and exposes a "View My Orders" link which navigates to `/orders` (note: ensure `/orders` route exists if you rely on it).
-
-### `OrderStatus` — `pages/order-status.tsx`
-- Route: `/order/:id`
-- Purpose: Visual order progress timeline (Placed → Packed → Shipped → Delivered).
+- Purpose: Demo checkout flow (no real payments).
 - Behavior:
-  - Polls `getOrderStatus(id)` every 2 seconds and uses localStorage as fallback for a stored order.
-  - Renders a progress bar showing the current step and shows carrier/ETA when status is Shipped or Delivered.
-  - Renders a `Back to Home` action (uses `Button` atom).
+  - Requires the user to be signed in (checks `localStorage.customerId`), otherwise navigates to `/login`.
+  - Generates/persists an idempotency key and calls `placeOrder(customerId, items, key)`.
+  - On success clears the cart and navigates to `/order/{orderId}`.
+  - Shows processing and retry UI; surfaces server error messages when present.
+
+### `Order` — `src/pages/order.tsx`
+- Route: `/order/:id`
+- Purpose: Show a single order's details and live tracking.
+- Behavior:
+  - Loads the order with `getOrder(id, customerId)` (customerId from localStorage) and handles missing customer or order with friendly errors.
+  - Renders order summary, itemized totals and delivery info (carrier, ETA).
+  - Embeds `OrderTracking` for SSE-based live status updates.
+
+### `Orders` — `src/pages/orders.tsx`
+- Route: `/orders`
+- Purpose: List all orders for the signed-in customer.
+- Behavior:
+  - Loads orders via `getOrdersByCustomer(customerId)` and redirects to `/login` when `customerId` is missing.
+  - Displays summarized cards linking to individual order pages; empty state points back to catalog.
+
+### `OrderTracking` — `src/pages/OrderTracking.tsx`
+- Component (used by `Order` page)
+- Purpose: SSE-based live order status UI.
+- Behavior:
+  - Subscribes to `/api/orders/:id/stream` via a `subscribeToOrderStream` helper.
+  - Updates status badges (PENDING → PROCESSING → SHIPPED → DELIVERED), handles reconnection attempts and shows an error banner if SSE fails.
+
+### `Support` — `src/pages/Support.tsx`
+- Route: `/support` (site-level support page)
+- Purpose: Full-page support chat interface that talks to the backend assistant.
+- Behavior:
+  - Uses `fetch` to POST `{ input, context: { customerId } }` to `${VITE_BACKEND_URL || 'http://localhost:3001'}/api/assistant`.
+  - Appends user and bot messages into local state, auto-scrolls, and supports sending on Enter.
+  - Shows friendly network error messages and graceful fallback text when the assistant is unavailable.
+
+### `UserLogin` — `src/pages/UserLogin.tsx`
+- Route: `/login`
+- Purpose: Lightweight email-based sign-in.
+- Behavior:
+  - Calls `signInByEmail(email)` which returns a customer and then redirects to home. Basic loading and error states are supported.
+
+### `AdminDashboard` — `src/pages/AdminDashboard.tsx`
+- Route: `/admin` (assumed)
+- Purpose: Admin monitoring and analytics dashboard.
+- Behavior:
+  - Fetches dashboard data (`fetchDashboardBusiness`, `fetchDailyRevenue`, `fetchDashboardPerformance`, `fetchAssistantStats`) and polls every 30s.
+  - Renders multiple metric cards, charts (using `recharts`), assistant analytics, and system health (reads `/api/health`).
+  - Shows critical alert banner when backend reports errors.
 
 ---
 
