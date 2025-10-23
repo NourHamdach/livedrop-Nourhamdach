@@ -109,16 +109,21 @@ async function maybeGenerateWithLLM(prompt) {
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 7000);
-
+    console.log("Sending to LLM:", { prompt, max_tokens: 500 });
     const res = await fetch(url, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ prompt, max_tokens: 500 }),
-      signal: controller.signal,
-    });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  },
+  body: JSON.stringify({ prompt, max_tokens: 500 }),
+  signal: controller.signal,
+});
     clearTimeout(timeout);
 
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.warn("⚠️ LLM /generate non-200:", res.status);
+      return null;}
     const data = await res.json();
     return typeof data.text === "string" ? data.text.trim() : null;
   } catch (err) {
